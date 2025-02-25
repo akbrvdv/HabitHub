@@ -1,4 +1,4 @@
-# 🌟 UAS Kelompok 2 🌟
+# 🌟 UAS Kelompok 8 🌟
 
 ## 📂 Daftar Isi Folder
 - **Dokumen UAS** 📄
