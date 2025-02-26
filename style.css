@@ -1,0 +1,205 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif; 
+  background-color: #f4f7f9; 
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 800px;
+  background-color: #fff;
+  border-radius: 12px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.left-panel {
+  flex: 1;
+  background-color: #fff;
+  padding: 48px; 
+  text-align: center;
+  border-right: 1px solid #e0e5eb;
+}
+
+.right-panel {
+  flex: 1;
+  background-color: #24292f; 
+  color: #fff;
+  padding: 48px;
+}
+
+.logo {
+  margin-bottom: 24px; 
+}
+
+.logo img {
+  width: 100px; 
+  height: auto;
+  display: block;
+  margin: 0 auto; 
+}
+
+.start-adventure {
+  font-size: 1.6em;
+  margin-bottom: 48px;
+  color: #495057; 
+}
+
+.login-button {
+  background-color: #ffc107;
+  color: #212529;
+  padding: 14px 28px; 
+  border: none;
+  border-radius: 8px; 
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 500; 
+  transition: background-color 0.3s, transform 0.2s; 
+}
+
+.login-button:hover {
+  background-color: #e0a800;
+  transform: scale(1.05); 
+}
+
+.signup-link {
+  margin-top: 24px;
+  font-size: 1em;
+  color: #6c757d;
+}
+
+.signup-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-link a:hover {
+  text-decoration: underline; 
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+label {
+  display: block;
+  font-weight: 500; 
+  margin-bottom: 8px;
+  color: #adb5bd; 
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #495057; 
+  border-radius: 8px;
+  background-color: #343a40;
+  color: #fff;
+  font-size: 1em;
+  transition: border-color 0.2s; 
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none; 
+  border-color: #ffc107;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.9em;
+  margin-top: 8px;
+  display: none; 
+  visibility: hidden; 
+}
+
+.submit-button {
+  background-color: #495057;
+  color: #fff;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  width: 100%;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #5a6268;
+  transform: scale(1.02);
+}
+
+.form-footer {
+  margin-top: 24px;
+  font-size: 1em;
+  text-align: center;
+  color: #adb5bd; 
+}
+
+.form-footer a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+input[type="text"].focused,
+input[type="password"].focused {
+  border-color: #2196F3; 
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5); 
+}
+
+/* Animasi Tombol Login */
+.submit-button.clicked {
+  transform: scale(0.95);
+  background-color: #303F9F; 
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+.submit-button {
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:hover {
+  background-color: #5a6268;
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.2em;
+  color: #777;
+  transition: color 0.2s;
+}
+
+.password-toggle:hover {
+  color: #333;
+}
