@@ -67,24 +67,24 @@ body {
   transition: background-color 0.3s, transform 0.2s; 
 }
 
-.signup-button:hover {
+.signin-button:hover {
   background-color: #e0a800;
   transform: scale(1.05); 
 }
 
-.signup-link {
+.signin-link {
   margin-top: 24px;
   font-size: 1em;
   color: #6c757d;
 }
 
-.signup-link a {
+.signin-link a {
   color: #007bff;
   text-decoration: none;
   font-weight: 500;
 }
 
-.signup-link a:hover {
+.signin-link a:hover {
   text-decoration: underline; 
 }
 
