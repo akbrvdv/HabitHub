@@ -55,7 +55,7 @@ body {
   color: #495057; 
 }
 
-.login-button {
+.signup-button {
   background-color: #ffc107;
   color: #212529;
   padding: 14px 28px; 
@@ -67,7 +67,7 @@ body {
   transition: background-color 0.3s, transform 0.2s; 
 }
 
-.login-button:hover {
+.signup-button:hover {
   background-color: #e0a800;
   transform: scale(1.05); 
 }
