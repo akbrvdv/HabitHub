@@ -166,7 +166,6 @@ input[type="password"].focused {
   box-shadow: 0 0 5px rgba(33, 150, 243, 0.5); 
 }
 
-/* Animasi Tombol Login */
 .submit-button.clicked {
   transform: scale(0.95);
   background-color: #303F9F; 
