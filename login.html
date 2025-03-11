@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="icon" href="assets/HabitHub icon.png" type="png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-section">
+            <div class="content">
+                <img src="assets/HabitHub logo w.png" alt="logo" width="200px">
+                <h1>Kamu pasti <br>bisa "<span class="h1span" id="typewriter"></span>"</h1>
+                <p>HabitHub membantu Anda untuk membuat dan mengelola Kebiasaan baik, memungkinkan mencapai goals jangka panjang.</p>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="form-container">
+                <h1>Sign In</h1>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-icon">
+                            <input type="text" id="username" value="" placeholder="Enter Username"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-icon">
+                            <input type="password" id="password" placeholder="Enter Password"/>
+                            <i class="material-icons eye-icon">visibility</i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-icon">
+                            <input type="password" id="confirmPassword" value="" />
+                            <i class="material-icons eye-icon">visibility</i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="captcha">Captcha</label>
+                        <div class="captcha-container">
+                            <span id="captcha-text"></span>
+                            <button type="button" id="refresh-captcha">Refresh</button>
+                        </div>
+                        <input type="text" id="captcha-input" placeholder="Enter Captcha">
+                        <p id="captcha-error" class="error-message" style="display: none;"></p> <!-- Tersembunyi secara default -->
+                    </div>
+                    
+                    <div class="login-link">
+                        <p>Belum punya akun? <a href="register.html">Register</a></p>
+                    </div>
+                    
+                    <button type="submit" class="btn-login-account">Masuk</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="log.js"></script>
+
+</body>
+</html>
