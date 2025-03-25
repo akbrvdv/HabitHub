@@ -1,91 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link rel="icon" href="assets/HabitHub icon.png" type="png">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    
-</head>
-<body>
-
+    <link rel="icon" href="assets/HabitHub icon.png" type="png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="container">
-        <div class="left-section">
-            <div class="content">
-                <img src="assets/HabitHub logo w.png" alt="logo" width="200px">
-                <h1>Kamu pasti <br>bisa "<span class="h1span" id="typewriter"></span>"</h1>
-                <p>HabitHub membantu Anda untuk membuat dan mengelola Kebiasaan baik, memungkinkan mencapai goals jangka panjang.</p>
-<!--                 <div class="buttons"> -->
-<!--                 <button class="btn-apaituhabithub" onclick="location.href='index.html'">Apa itu HabitHub?</button> -->
-<!--                 </div> -->
-            </div>
+      <div class="left-section">
+        <div class="content">
+          <img src="assets/HabitHub logo w.png" alt="logo" width="200px" />
+          <h1>
+            Kamu pasti <br />bisa "<span class="h1span" id="typewriter"></span>"
+          </h1>
+          <p>
+            HabitHub membantu Anda untuk membuat dan mengelola Kebiasaan baik,
+            memungkinkan mencapai goals jangka panjang.
+          </p>
+          <!--                 <div class="buttons"> -->
+          <!--                 <button class="btn-apaituhabithub" onclick="location.href='index.html'">Apa itu HabitHub?</button> -->
+          <!--                 </div> -->
         </div>
-        <div class="right-section">
-            <div class="form-container">
-                <h1>Buat akun baru.</h1>
-                
-                <form>
-                    <div class="name-fields">
-                        <div class="form-group">
-                            <label for="namaDepan">Nama Depan</label>
-                            <div class="input-icon">
-                                <input type="text" id="namaDepan" value="" placeholder="Depan"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="NamaBelakang">Nama Belakang</label>
-                            <div class="input-icon">
-                                <input type="text" id="NamaBelakang" value="" placeholder="Belakang"/>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-icon">
-                            <input type="text" id="username" value=""/>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <div class="input-icon">
-                            <input type="email" id="email" value="" placeholder="@abc.com"/>
-                            <span class="email-icon">✉</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-icon">
-                            <input type="password" id="password"/>
-                            <i class="material-icons eye-icon">visibility</i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <div class="input-icon">
-                            <input type="password" id="confirmPassword" value="" />
-                            <i class="material-icons eye-icon">visibility</i>
-                        </div>
-                    </div>
-                    
-                    <div class="login-link">
-                        <p>Sudah punya akun? <a href="login.html">Log In</a></p>
-                    </div>
-                    
-                    <button type="submit" class="btn-create-account">Buat Akun</button>
-                </form>
+      </div>
+      <div class="right-section">
+        <div class="form-container">
+          <h1>Buat akun baru.</h1>
+
+          <form>
+            <div class="name-fields">
+              <div class="form-group">
+                <label for="namaDepan">Nama Depan</label>
+                <div class="input-icon">
+                  <input
+                    type="text"
+                    id="namaDepan"
+                    value=""
+                    placeholder="Depan"
+                  />
+                </div>
+              </div>
+              <div class="name">
+                <label for="NamaBelakang">Nama Belakang</label>
+                <div class="input-icon">
+                  <input
+                    type="text"
+                    id="NamaBelakang"
+                    value=""
+                    placeholder="Belakang"
+                  />
+                </div>
+              </div>
             </div>
+
+            <div class="form-group">
+              <label for="username">Username</label>
+              <div class="input-icon">
+                <input type="text" id="username" value="" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <div class="input-icon">
+                <input
+                  type="email"
+                  id="email"
+                  value=""
+                  placeholder="@abc.com"
+                />
+                <span class="material-icons email-icon">email</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="text">Nomor Telepon</label>
+              <div class="input-icon">
+                <input type="text" id="text" value="" placeholder="+62" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <div class="input-icon">
+                <input type="password" id="password" />
+                <i class="material-icons eye-icon">visibility_off</i>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <div class="input-icon">
+                <input type="password" id="confirmPassword" value="" />
+                <i class="material-icons eye-icon">visibility_off</i>
+              </div>
+            </div>
+
+            <!-- captcha  -->
+            <div class="form-group">
+              <label for="captcha">Captcha</label>
+              <div class="captcha-container">
+                <span id="captcha-text"></span>
+                <button type="button" id="refresh-captcha">Refresh</button>
+              </div>
+              <input
+                type="text"
+                id="captcha-input"
+                placeholder="Masukkan Captcha"
+              />
+              <p
+                id="captcha-error"
+                class="error-message"
+                style="display: none"
+              ></p>
+            </div>
+
+            <button type="submit" class="btn-create-account">
+              <b>Buat Akun</b>
+            </button>
+
+            <div class="login-link">
+              <p>
+                Sudah punya akun? <a href="login.html"><b>Log In</b></a>
+              </p>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
     <script src="reg.js"></script>
-
-</body>
+  </body>
 </html>
