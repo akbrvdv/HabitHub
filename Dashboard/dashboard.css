@@ -1,0 +1,429 @@
+/* Basic Reset & Font */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa; /* Light background for the page */
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Container Layout */
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #343a40; /* Dark grey */
+    color: #ced4da; /* Light grey text */
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+}
+
+.logo {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+.logo-icon {
+    display: inline-block;
+    background-color: #fff; /* Example icon style */
+    color: #343a40;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+
+nav ul {
+    list-style: none;
+}
+
+nav a {
+    color: #adb5bd; /* Lighter grey for inactive links */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+nav a .icon {
+    margin-right: 12px;
+    font-size: 1.2em; /* Adjust icon size */
+}
+
+nav a:hover {
+    background-color: #495057; /* Slightly darker grey on hover */
+    color: #f8f9fa;
+}
+
+nav a.active {
+    background-color: #495057;
+    color: #fff;
+    font-weight: 500;
+}
+
+.user-profile {
+    margin-top: auto; /* Pushes profile to the bottom */
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    border-top: 1px solid #495057; /* Separator line */
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.user-info .username {
+    display: block;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #f8f9fa;
+}
+
+.user-info .email {
+    display: block;
+    font-size: 0.8em;
+    color: #adb5bd;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 30px 40px;
+    background-color: #e9eef2; /* Very light blue/grey background */
+    overflow-y: auto; /* Allows scrolling if content exceeds height */
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.main-header .title h1 {
+    margin: 0 0 5px 0;
+    font-size: 1.8em;
+    color: #212529;
+}
+
+.main-header .title p {
+    margin: 0;
+    color: #6c757d; /* Grey text */
+    font-size: 0.9em;
+}
+
+.add-habit-btn {
+    background-color: #ffc107; /* Orange */
+    color: #333; /* Dark text for contrast */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px; /* Pill shape */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.add-habit-btn:hover {
+    background-color: #e0a800; /* Darker orange on hover */
+}
+
+/* Grid for Habits and Right Panel */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Adjust ratio if needed, e.g., 2fr 1fr */
+    gap: 30px;
+}
+
+.habit-section {
+    grid-column: span 2; /* Habits take 2/3 width */
+}
+
+.right-panel {
+    grid-column: span 1; /* Stats/Calendar take 1/3 width */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Habit List Styling */
+.habit-list {
+    display: grid;
+    gap: 15px;
+}
+
+.habit-item {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 2px solid transparent; /* For highlighted state */
+    transition: border-color 0.2s ease;
+}
+
+.habit-item.highlighted {
+    border-color: #ffc107; /* Orange border */
+}
+
+.habit-info {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.habit-info .icon {
+    font-size: 1.4em;
+    margin-right: 15px;
+    width: 30px; /* Ensure consistent spacing */
+    text-align: center;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #adb5bd; /* Grey border */
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: transparent; /* Hide checkmark by default */
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.checkbox.checked {
+    color: white; /* Show checkmark */
+}
+
+.checkbox.checked.orange-check {
+    background-color: #ffc107; /* Orange background */
+    border-color: #ffc107;
+}
+.checkbox.checked.grey-check {
+    background-color: #6c757d; /* Grey background */
+    border-color: #6c757d;
+}
+
+
+/* Stats Area Styling */
+.stats-area {
+    display: grid;
+    grid-template-columns: 1fr; /* Stack vertically initially */
+    gap: 20px;
+}
+
+/* Adjust stats layout if needed */
+@media (min-width: 768px) { /* Example breakpoint for wider screens */
+    .stats-area {
+       /* Can adjust grid here if needed, e.g., make them side-by-side */
+       /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    }
+}
+
+
+.stat-card {
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    min-height: 100px; /* Ensure minimum height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-card p {
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.stat-card h2 {
+    font-size: 2em;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.stat-card .bg-icon {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    font-size: 3.5em; /* Adjust size */
+    opacity: 0.15; /* Make it subtle */
+    line-height: 1;
+}
+
+
+.stat-card.streak { background-color: #ffc107; }
+.stat-card.failed { background-color: #dc3545; } /* Red */
+.stat-card.completed { background-color: #0d6efd; } /* Blue */
+
+/* Calendar Styling */
+.calendar {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.calendar-nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3em;
+    color: #6c757d;
+    padding: 0 5px;
+}
+.calendar-nav button:hover {
+    color: #333;
+}
+
+.calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.75em;
+    color: #6c757d;
+    margin-bottom: 10px;
+    font-weight: 600;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px; /* Spacing between days */
+    text-align: center;
+}
+
+.calendar-grid span {
+    padding: 6px;
+    border-radius: 50%; /* Circular days */
+    line-height: 1.5; /* Adjust for circle shape and font */
+    font-size: 0.85em;
+    cursor: default;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.calendar-grid span:not(:empty):hover {
+    background-color: #eee; /* Subtle hover for days */
+}
+
+.calendar-grid span.active-day {
+    background-color: #17a2b8; /* Teal color */
+    color: white;
+    font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .content-grid {
+        grid-template-columns: 1fr; /* Stack habit list and right panel */
+    }
+    .habit-section {
+        grid-column: span 1;
+    }
+    .right-panel {
+        grid-column: span 1;
+        /* Adjust stats layout if needed for stacked view */
+        /* e.g., make stats cards side-by-side */
+         .stats-area {
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+    .sidebar {
+        width: 100%;
+        height: auto; /* Adjust height */
+        flex-direction: row; /* Make sidebar items horizontal */
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+    }
+    .logo { margin-bottom: 0;}
+    nav { margin-left: 20px;}
+    nav ul { display: flex; gap: 10px; }
+    nav a { margin-bottom: 0; padding: 8px 10px;}
+    nav a .icon { margin-right: 5px;} /* Reduce icon margin */
+     nav a span:not(.icon) { display: none;} /* Hide text labels on small screens */
+    .user-profile { margin-top: 0; border-top: none; padding: 0;}
+
+    .main-content {
+        padding: 20px;
+    }
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .add-habit-btn {
+        align-self: flex-end;
+    }
+     .stats-area {
+        grid-template-columns: 1fr; /* Stack stats cards vertically */
+    }
+}
+
+@media (max-width: 480px) {
+     .logo span:not(.logo-icon) { display: none;} /* Hide "HabitHub" text */
+     .logo { padding-left: 0;}
+     nav { margin-left: 10px;}
+     .main-header .title h1 { font-size: 1.5em; }
+     .habit-info .icon { margin-right: 10px; }
+     .habit-info span:not(.icon) { font-size: 0.9em;} /* Smaller habit text */
+}

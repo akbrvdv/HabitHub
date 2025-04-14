@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon"> H </span> HabitHub
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#" class="active">
+                            <span class="icon">🏠</span> Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <img src="https://via.placeholder.com/40" alt="User Avatar">
+                <div class="user-info">
+                    <span class="username">User123</span>
+                    <span class="email">user123@gmail.com</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="title">
+                    <h1>Dashboard</h1>
+                    <p>Habit hari ini</p>
+                </div>
+                <button class="add-habit-btn">Tambah Habit +</button>
+            </header>
+
+            <div class="content-grid">
+                <section class="habit-section">
+                    <div class="habit-list">
+                        <div class="habit-item highlighted">
+                            <div class="habit-info">
+                                <span class="icon">😊</span> Senam
+                            </div>
+                            <div class="checkbox checked orange-check">✓</div>
+                        </div>
+                        <div class="habit-item">
+                            <div class="habit-info">
+                                <span class="icon">🍼</span> Sebatz
+                            </div>
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="habit-item">
+                            <div class="habit-info">
+                                <span class="icon">🐓</span> Senam pagi
+                            </div>
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="habit-item">
+                            <div class="habit-info">
+                                <span class="icon">❤️</span> Dhuha
+                            </div>
+                            <div class="checkbox checked grey-check">✓</div>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="right-panel">
+                    <div class="stats-area">
+                        <div class="stat-card streak">
+                            <span class="bg-icon">🔥</span>
+                            <p>Runtutan Saat Ini</p>
+                            <h2>1 Hari</h2>
+                        </div>
+                        <div class="stat-card failed">
+                            <span class="bg-icon">❗</span>
+                            <p>Gagal</p>
+                            <h2>0 Hari</h2>
+                        </div>
+                        <div class="stat-card completed">
+                             <span class="bg-icon">⭐</span>
+                            <p>Total tuntas</p>
+                            <h2>2 Hari</h2>
+                        </div>
+                    </div>
+
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <h2>Januari 2022</h2>
+                            <div class="calendar-nav">
+                                <button><</button>
+                                <button>></button>
+                            </div>
+                        </div>
+                        <div class="calendar-days-header">
+                            <span>SEN</span>
+                            <span>SEL</span>
+                            <span>RAB</span>
+                            <span>KAM</span>
+                            <span>JUM</span>
+                            <span>SAB</span>
+                            <span>MIN</span>
+                        </div>
+                        <div class="calendar-grid">
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span class="active-day">1</span>
+                            <span>2</span>
+                            <span>3</span>
+                            <span>4</span>
+                            <span>5</span>
+                            <span>6</span>
+                            <span>7</span>
+                            <span>8</span>
+                            <span>9</span>
+                            <span>10</span>
+                            <span>11</span>
+                            <span>12</span>
+                            <span>13</span>
+                            <span>14</span>
+                            <span>15</span>
+                            <span>16</span>
+                            <span>17</span>
+                            <span>18</span>
+                            <span>19</span>
+                            <span>20</span>
+                            <span>21</span>
+                            <span>22</span>
+                            <span>23</span>
+                            <span>24</span>
+                            <span>25</span>
+                            <span>26</span>
+                            <span>27</span>
+                            <span>28</span>
+                            <span>29</span>
+                            <span>30</span>
+                            <span>31</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
