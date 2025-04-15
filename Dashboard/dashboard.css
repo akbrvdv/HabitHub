@@ -5,12 +5,36 @@
     padding: 0;
 }
 
+html {
+    font-size: 16px; /* Base font size */
+}
+
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa; /* Light background for the page */
+    background-color: #f8f9fa;
     color: #333;
     display: flex;
     min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Visually Hidden Class */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.no-habits-message {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+    font-style: italic;
 }
 
 /* Container Layout */
@@ -22,12 +46,12 @@ body {
 /* Sidebar */
 .sidebar {
     width: 250px;
-    background-color: #343a40; /* Dark grey */
-    color: #ced4da; /* Light grey text */
+    background-color: #343a40;
+    color: #ced4da;
     padding: 25px 15px;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    flex-shrink: 0;
 }
 
 .logo {
@@ -41,7 +65,7 @@ body {
 }
 .logo-icon {
     display: inline-block;
-    background-color: #fff; /* Example icon style */
+    background-color: #fff;
     color: #343a40;
     width: 30px;
     height: 30px;
@@ -58,7 +82,7 @@ nav ul {
 }
 
 nav a {
-    color: #adb5bd; /* Lighter grey for inactive links */
+    color: #adb5bd;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -71,12 +95,13 @@ nav a {
 
 nav a .icon {
     margin-right: 12px;
-    font-size: 1.2em; /* Adjust icon size */
+    font-size: 1.2em;
 }
 
-nav a:hover {
-    background-color: #495057; /* Slightly darker grey on hover */
+nav a:hover, nav a:focus {
+    background-color: #495057;
     color: #f8f9fa;
+    outline: none; /* Remove default focus outline if needed */
 }
 
 nav a.active {
@@ -86,11 +111,11 @@ nav a.active {
 }
 
 .user-profile {
-    margin-top: auto; /* Pushes profile to the bottom */
+    margin-top: auto;
     display: flex;
     align-items: center;
     padding: 15px 10px;
-    border-top: 1px solid #495057; /* Separator line */
+    border-top: 1px solid #495057;
 }
 
 .user-profile img {
@@ -118,8 +143,8 @@ nav a.active {
 .main-content {
     flex-grow: 1;
     padding: 30px 40px;
-    background-color: #e9eef2; /* Very light blue/grey background */
-    overflow-y: auto; /* Allows scrolling if content exceeds height */
+    background-color: #e9eef2;
+    overflow-y: auto;
 }
 
 .main-header {
@@ -127,49 +152,54 @@ nav a.active {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 15px;
 }
 
 .main-header .title h1 {
     margin: 0 0 5px 0;
     font-size: 1.8em;
     color: #212529;
+    line-height: 1.2;
 }
 
 .main-header .title p {
     margin: 0;
-    color: #6c757d; /* Grey text */
+    color: #6c757d;
     font-size: 0.9em;
 }
 
 .add-habit-btn {
-    background-color: #ffc107; /* Orange */
-    color: #333; /* Dark text for contrast */
+    background-color: #ffc107;
+    color: #333;
     border: none;
     padding: 10px 20px;
-    border-radius: 20px; /* Pill shape */
+    border-radius: 20px;
     cursor: pointer;
     font-weight: 600;
     font-size: 0.9em;
     transition: background-color 0.2s ease;
+    white-space: nowrap; /* Prevent button text wrap */
 }
 
-.add-habit-btn:hover {
-    background-color: #e0a800; /* Darker orange on hover */
+.add-habit-btn:hover, .add-habit-btn:focus {
+    background-color: #e0a800;
+    outline: none;
 }
 
 /* Grid for Habits and Right Panel */
 .content-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Default: Habits take 2/3, Right panel 1/3 */
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 }
 
 .habit-section {
-    grid-column: span 2; /* Habits take 2 columns */
+    grid-column: span 2;
 }
 
 .right-panel {
-    grid-column: span 1; /* Stats/Calendar take 1 column */
+    grid-column: span 1;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -185,42 +215,77 @@ nav a.active {
 .habit-item {
     background-color: #fff;
     border-radius: 10px;
-    padding: 15px 20px;
-    display: grid; /* Use grid for layout inside item */
-    grid-template-columns: auto 1fr auto auto; /* Icon, Nama, Aksi, Checkbox */
+    padding: 12px 15px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto; /* Icon, Details(Info+Stats), Actions, Checkbox */
     gap: 10px;
-    align-items: center;
+    align-items: center; /* Default alignment */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     border: 2px solid transparent;
     transition: border-color 0.2s ease, background-color 0.2s ease;
+    position: relative;
 }
 
 .habit-item.highlighted {
-    /* Keep border highlight subtle, maybe use background instead? */
-    /* border-color: #ffc107; */
-    background-color: #fffadf; /* Light yellow highlight when checked */
+    background-color: #fffadf; /* Light yellow highlight */
 }
 
 .habit-item .icon {
     font-size: 1.4em;
     width: 30px;
     text-align: center;
-    grid-column: 1 / 2; /* Icon in first column */
+    grid-column: 1 / 2;
+    align-self: start; /* Align icon to the top */
+    padding-top: 2px;
+}
+
+/* Container for Name and Stats */
+.habit-details {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: hidden; /* Prevent text overflow issues */
 }
 
 .habit-info {
     font-weight: 500;
-    grid-column: 2 / 3; /* Name in second column */
-    margin-right: auto; /* Push actions to the right */
-    overflow: hidden; /* Prevent long names from breaking layout */
+    font-size: 1em;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
+/* Individual Habit Stats */
+.habit-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.75em;
+    color: #555;
+}
+
+.habit-stats span { /* Container for each stat (icon + number) */
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background-color: #f1f3f5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: default; /* Indicate it's display-only */
+}
+
+.habit-stats .stat-icon {
+    font-size: 0.9em;
+    /* Inherit color or set specific one */
+}
+
+/* Habit Actions (Edit/Delete) */
 .habit-actions {
     display: flex;
     gap: 8px;
-    grid-column: 3 / 4; /* Actions in third column */
+    grid-column: 3 / 4;
+    align-self: center; /* Center vertically */
 }
 
 .habit-actions button {
@@ -233,14 +298,16 @@ nav a.active {
     transition: color 0.2s ease;
 }
 
-.habit-actions button:hover {
+.habit-actions button:hover, .habit-actions button:focus {
     color: #333;
+    outline: none;
 }
 
+/* Habit Checkbox */
 .checkbox {
     width: 24px;
     height: 24px;
-    border: 2px solid #adb5bd; /* Grey border */
+    border: 2px solid #adb5bd;
     border-radius: 6px;
     cursor: pointer;
     display: flex;
@@ -248,14 +315,20 @@ nav a.active {
     justify-content: center;
     font-weight: bold;
     font-size: 1.1em;
-    color: transparent; /* Hide checkmark by default */
+    color: transparent;
     transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-    grid-column: 4 / 5; /* Checkbox in fourth column */
-    justify-self: end; /* Align to the end */
+    grid-column: 4 / 5;
+    justify-self: end; /* Align to the right */
+    align-self: center; /* Center vertically */
+}
+
+.checkbox:focus {
+    outline: 2px solid #a2cff0; /* Focus indicator */
+    outline-offset: 1px;
 }
 
 .checkbox.checked {
-    color: white; /* Show checkmark */
+    color: white;
 }
 
 /* Checkbox Color Variants */
@@ -266,7 +339,7 @@ nav a.active {
 .checkbox.checked.red-check { background-color: #dc3545; border-color: #dc3545; }
 
 
-/* Stats Area Styling */
+/* Global Stats Area Styling */
 .stats-area {
     display: grid;
     grid-template-columns: 1fr; /* Stack vertically by default */
@@ -307,8 +380,8 @@ nav a.active {
 }
 
 .stat-card.streak { background-color: #ffc107; }
-.stat-card.failed { background-color: #dc3545; } /* Red */
-.stat-card.completed { background-color: #0d6efd; } /* Blue */
+.stat-card.failed { background-color: #dc3545; }
+.stat-card.completed { background-color: #0d6efd; }
 
 /* Calendar Styling */
 .calendar {
@@ -339,8 +412,9 @@ nav a.active {
     color: #6c757d;
     padding: 0 5px;
 }
-.calendar-nav button:hover {
+.calendar-nav button:hover, .calendar-nav button:focus {
     color: #333;
+    outline: none;
 }
 
 .calendar-days-header {
@@ -369,10 +443,11 @@ nav a.active {
     font-size: 0.85em;
     cursor: default;
     transition: background-color 0.2s ease, color 0.2s ease;
-    display: flex; /* Center number vertically */
+    display: flex;
     align-items: center;
     justify-content: center;
     aspect-ratio: 1 / 1; /* Make it a circle */
+    min-height: 30px; /* Ensure minimum size */
 }
 
 .calendar-grid span:not(:empty):hover {
@@ -397,6 +472,10 @@ nav a.active {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.6);
     padding-top: 60px;
+}
+
+.modal[aria-hidden="false"] {
+    display: block; /* Show when not hidden */
 }
 
 .modal-content {
@@ -425,13 +504,18 @@ nav a.active {
     right: 20px;
     font-size: 28px;
     font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
 }
 
 .close-btn:hover,
 .close-btn:focus {
     color: black;
     text-decoration: none;
-    cursor: pointer;
+    outline: none;
 }
 
 .modal-content h2 {
@@ -460,6 +544,10 @@ nav a.active {
     font-family: 'Poppins', sans-serif;
     font-size: 0.95em;
 }
+.form-group input[type="text"]:focus {
+    outline: 1px solid #a2cff0;
+    border-color: #80bdff;
+}
 
 .form-actions {
     margin-top: 25px;
@@ -477,12 +565,16 @@ nav a.active {
     font-size: 0.9em;
     transition: background-color 0.2s ease;
 }
+.form-actions button:focus {
+    outline: 2px solid #a2cff0;
+    outline-offset: 1px;
+}
 
 #save-habit-btn {
     background-color: #0d6efd; /* Blue */
     color: white;
 }
-#save-habit-btn:hover {
+#save-habit-btn:hover, #save-habit-btn:focus {
     background-color: #0b5ed7;
 }
 
@@ -490,7 +582,7 @@ nav a.active {
     background-color: #6c757d; /* Grey */
     color: white;
 }
-#cancel-btn:hover {
+#cancel-btn:hover, #cancel-btn:focus {
     background-color: #5a6268;
 }
 
@@ -498,20 +590,19 @@ nav a.active {
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
     .content-grid {
-        grid-template-columns: 1fr; /* Stack habit list and right panel */
+        grid-template-columns: 1fr; /* Stack main content and right panel */
     }
     .habit-section, .right-panel {
         grid-column: span 1;
     }
-    /* Make stats cards side-by-side on medium screens when stacked */
      .stats-area {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Side-by-side stats */
     }
 }
 
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Stack sidebar and main content */
+        flex-direction: column;
     }
     .sidebar {
         width: 100%;
@@ -520,16 +611,17 @@ nav a.active {
         justify-content: space-between;
         align-items: center;
         padding: 15px 20px;
-        position: sticky; /* Make sidebar sticky on mobile */
+        position: sticky; /* Optional: make sidebar sticky */
         top: 0;
-        z-index: 900; /* Below modal */
+        z-index: 900;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .logo { margin-bottom: 0;}
     nav { margin-left: 20px;}
     nav ul { display: flex; gap: 10px; }
     nav a { margin-bottom: 0; padding: 8px 10px;}
     nav a .icon { margin-right: 5px;}
-    nav a span:not(.icon) { display: none;} /* Hide text labels */
+    nav a span:not(.icon) { display: none;}
     .user-profile { margin-top: 0; border-top: none; padding: 0;}
 
     .main-content {
@@ -538,8 +630,7 @@ nav a.active {
     .main-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
-        margin-bottom: 20px;
+        gap: 15px; /* Increased gap */
     }
     .add-habit-btn {
         align-self: flex-end;
@@ -550,28 +641,37 @@ nav a.active {
 }
 
 @media (max-width: 480px) {
-    .logo span:not(.logo-icon) { display: none;} /* Hide "HabitHub" text */
+    .logo span:not(.logo-icon) { display: none;}
     .logo { padding-left: 0;}
     nav { margin-left: 10px;}
     .main-header .title h1 { font-size: 1.5em; }
 
-    /* Adjust habit item grid for very small screens */
+    /* Habit item layout for small screens */
     .habit-item {
-        grid-template-columns: auto 1fr auto; /* Icon, Nama+Aksi, Checkbox */
+        grid-template-columns: auto 1fr auto; /* Icon, Details+Actions, Checkbox */
         gap: 8px;
-        padding: 10px 15px;
+        padding: 10px 12px;
     }
     .habit-item .icon { grid-column: 1 / 2; }
-    .habit-info { grid-column: 2 / 3; margin-right: 5px; } /* Reduce margin */
+    .habit-details { grid-column: 2 / 3; }
     .habit-actions {
-        grid-column: 2 / 3; /* Place actions within name column */
-        justify-self: end; /* Align actions to the right */
-        align-items: center; /* Vertically center buttons with name */
-        gap: 5px; /* Reduce gap */
+        grid-column: 2 / 3; /* Put actions in the same column as details */
+        grid-row: 1 / 2; /* Place it visually on the same row as habit name */
+        justify-self: end; /* Push to the right */
+        align-self: start; /* Align with top of habit name */
+        padding-top: 2px; /* Adjust vertical alignment */
+        gap: 5px;
     }
      .habit-actions button { font-size: 1em; } /* Slightly smaller buttons */
-    .checkbox { grid-column: 3 / 4; } /* Checkbox in the last column */
-    .habit-info span:not(.icon) { font-size: 0.9em;} /* Smaller habit text */
+    .habit-stats {
+       /* Stays below the name */
+       font-size: 0.7em;
+       gap: 6px;
+       margin-top: 3px; /* Small space */
+    }
+    .checkbox { grid-column: 3 / 4; align-self: center;}
 
      .modal-content { width: 90%; padding: 20px; }
+     .form-actions { flex-direction: column; gap: 8px;} /* Stack modal buttons */
+     .form-actions button { width: 100%; }
 }
