@@ -196,6 +196,9 @@ nav a.active {
 
 .habit-section {
     grid-column: span 2;
+    /* Added to ensure height constraint works */
+    display: flex;
+    flex-direction: column;
 }
 
 .right-panel {
@@ -209,7 +212,33 @@ nav a.active {
 .habit-list {
     display: grid;
     gap: 15px;
+    /* --- MODIFIKASI SCROLL START --- */
+    max-height: 65vh; /* Batasi tinggi maksimal, sesuaikan nilai vh sesuai kebutuhan */
+    overflow-y: auto; /* Tampilkan scrollbar vertikal jika konten melebihi max-height */
+    padding-right: 8px; /* Beri sedikit ruang untuk scrollbar agar tidak menempel konten */
+    /* --- MODIFIKASI SCROLL END --- */
 }
+
+/* Style scrollbar (opsional, untuk tampilan lebih baik di browser Webkit seperti Chrome/Safari) */
+.habit-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.habit-list::-webkit-scrollbar-track {
+    background: #f1f3f5; /* Warna latar track scrollbar */
+    border-radius: 10px;
+}
+
+.habit-list::-webkit-scrollbar-thumb {
+    background-color: #adb5bd; /* Warna scrollbar */
+    border-radius: 10px;
+    border: 2px solid #f1f3f5; /* Membuat thumb sedikit lebih kecil dari track */
+}
+
+.habit-list::-webkit-scrollbar-thumb:hover {
+    background-color: #6c757d; /* Warna scrollbar saat hover */
+}
+
 
 /* Habit Item Styling */
 .habit-item {
@@ -224,7 +253,17 @@ nav a.active {
     border: 2px solid transparent;
     transition: border-color 0.2s ease, background-color 0.2s ease;
     position: relative;
+    /* --- MODIFIKASI KLIK HABIT --- */
+    cursor: pointer; /* Tambahkan cursor pointer ke seluruh item */
 }
+
+/* --- MODIFIKASI KLIK HABIT (Agar tombol tetap berfungsi) --- */
+.habit-item .habit-actions button,
+.habit-item .edit-btn,
+.habit-item .delete-btn {
+    cursor: pointer; /* Pastikan tombol tetap punya cursor pointer */
+}
+
 
 .habit-item.highlighted {
     background-color: #fffadf; /* Light yellow highlight */
@@ -291,7 +330,7 @@ nav a.active {
 .habit-actions button {
     background: none;
     border: none;
-    cursor: pointer;
+    /* cursor: pointer; Dihapus dari sini, dipindah ke atas */
     font-size: 1.1em;
     padding: 2px;
     color: #6c757d;
@@ -309,7 +348,7 @@ nav a.active {
     height: 24px;
     border: 2px solid #adb5bd;
     border-radius: 6px;
-    cursor: pointer;
+    /* cursor: pointer; Dihapus dari sini, cursor diatur di .habit-item */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -638,6 +677,10 @@ nav a.active {
      .stats-area {
         grid-template-columns: 1fr; /* Stack stats cards vertically again */
     }
+     /* Adjust habit list height on smaller screens if needed */
+    .habit-list {
+        max-height: 50vh; /* Reduce max height on tablets */
+    }
 }
 
 @media (max-width: 480px) {
@@ -674,4 +717,9 @@ nav a.active {
      .modal-content { width: 90%; padding: 20px; }
      .form-actions { flex-direction: column; gap: 8px;} /* Stack modal buttons */
      .form-actions button { width: 100%; }
+
+    /* Adjust habit list height on mobile */
+     .habit-list {
+        max-height: 45vh; /* Further reduce max height on phones */
+    }
 }

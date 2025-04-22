@@ -191,11 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (habit.checked) {
                 habitItem.classList.add('highlighted');
             }
-            habitItem.dataset.id = habit.id;
+            habitItem.dataset.id = habit.id; // Store habit ID
 
             const checkColorClass = habit.color || 'orange-check';
             const checkboxClass = habit.checked ? 'checked' : '';
-            const habitNameId = `habit-name-${habit.id}`;
+            const habitNameId = `habit-name-${habit.id}`; // Unique ID for aria-labelledby
 
             // Use textContent for safety
             const habitNameText = habit.name || 'Habit Tanpa Nama';
@@ -228,6 +228,8 @@ document.addEventListener('DOMContentLoaded', () => {
                    ${habit.checked ? '✓' : ''}
                 </div>
             `;
+            // Set tabindex -1 on action buttons to prevent them being focused when clicking the item
+            habitItem.querySelectorAll('.edit-btn, .delete-btn').forEach(btn => btn.setAttribute('tabindex', '-1'));
             habitListContainer.appendChild(habitItem);
         });
     };
@@ -286,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Updates habit name/icon only.
      */
     const updateHabit = (id, name, icon) => {
-        const habitIndex = habits.findIndex(h => h.id == id);
+        const habitIndex = habits.findIndex(h => h.id == id); // Use == for potential string/number ID comparison
         if (habitIndex > -1) {
             habits[habitIndex].name = name;
             habits[habitIndex].icon = icon || '🎯';
@@ -326,65 +328,62 @@ document.addEventListener('DOMContentLoaded', () => {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayYMD = getYMD(yesterday);
+        let previousCompletion = habit.lastCompletedDate; // Store state *before* toggle
 
         // Toggle the checked state for today
         habit.checked = !wasChecked;
 
         if (habit.checked) {
             // --- JUST MARKED AS COMPLETE ---
-            habit.totalCompletions++;
-            const previousCompletion = habit.lastCompletedDate; // Store before overwriting
-            habit.lastCompletedDate = todayYMD;
+            // Only increment total/update date if it wasn't already marked complete today
+            if (previousCompletion !== todayYMD) {
+                habit.totalCompletions++;
+                habit.lastCompletedDate = todayYMD;
 
-            // Calculate streak
-            if (previousCompletion === yesterdayYMD) {
-                habit.currentStreak++; // Continued streak
-            } else if (previousCompletion !== todayYMD) {
-                // Start new streak only if it wasn't already completed today before unchecking
-                 habit.currentStreak = 1;
-            } // else: if previousCompletion was today, streak was already set today, do nothing extra
+                // Calculate streak
+                if (previousCompletion === yesterdayYMD) {
+                    habit.currentStreak++; // Continued streak
+                } else {
+                    habit.currentStreak = 1; // Started a new streak today
+                }
+                console.log(`Habit "${habit.name}" COMPLETE. Streak: ${habit.currentStreak}, Total: ${habit.totalCompletions}`);
+            } else {
+                 console.log(`Habit "${habit.name}" was already marked complete today. State unchanged.`);
+            }
 
-            console.log(`Habit "${habit.name}" COMPLETE. Streak: ${habit.currentStreak}, Total: ${habit.totalCompletions}`);
 
         } else {
             // --- JUST MARKED AS INCOMPLETE (Unchecked today) ---
-            // Revert changes made *today* only
-            if (habit.lastCompletedDate === todayYMD) {
+            // Only revert changes if it *was* marked complete *today*
+            if (previousCompletion === todayYMD) {
                  habit.totalCompletions--; // Decrement total safely
-                 // Set last completed date back to what it was *before* today
-                 // This requires knowing the state before the *first* check today.
-                 // Simpler: Let's just nullify today's completion. Daily check fixes streak tomorrow.
-                 // We need to find the *actual* last completion before today
+
+                 // Find the actual last completion date before today
+                 // This is tricky without full history. Approximate based on streak:
                  let lastCompletionBeforeToday = null;
-                 // This naive search isn't right. The habit object itself should hold the necessary history,
-                 // or we accept the limitation of the simpler approach.
-                 // Let's find the last completion date that ISN'T today from the current data
-                 if(habit.totalCompletions > 0) {
-                     // If total completions > 0, there must have been a prior date.
-                     // For simplicity, let's assume yesterday if streak > 0, otherwise null.
-                     // This isn't perfect but avoids storing full history.
-                     lastCompletionBeforeToday = habit.currentStreak > 0 ? yesterdayYMD : null; // Approximate
+                 if (habit.currentStreak > 1) { // If streak was > 1, it must include yesterday
+                     lastCompletionBeforeToday = yesterdayYMD;
+                     habit.currentStreak--; // Revert the increment from today
+                 } else if (habit.currentStreak === 1) { // If streak just started today
+                     habit.currentStreak = 0; // Reset streak
+                     // Keep lastCompletionBeforeToday as null (or find actual if possible)
                  }
+                 // If streak was 0, it remains 0
+
                  habit.lastCompletedDate = lastCompletionBeforeToday;
 
-                 // If we nullified today's completion, reset streak ONLY IF it started today
-                 if (habit.currentStreak === 1 && previousCompletion !== yesterdayYMD) {
-                     habit.currentStreak = 0;
-                 } else if (habit.currentStreak > 1 && previousCompletion === yesterdayYMD) {
-                     // If streak was continued today and we uncheck, revert the increment
-                     habit.currentStreak--;
-                 }
-
-
                  console.log(`Habit "${habit.name}" UNCHECKED today. Total: ${habit.totalCompletions}, Streak: ${habit.currentStreak}, LastComp: ${habit.lastCompletedDate}`);
+            } else {
+                 console.log(`Habit "${habit.name}" was not marked complete today. State unchanged upon unchecking.`);
             }
-             // If it wasn't completed today (lastCompletedDate !== todayYMD), unchecking does nothing.
+             // If it wasn't completed today (lastCompletedDate !== todayYMD), unchecking does nothing to stats.
         }
 
         saveHabits();
         updateHabitItemDOM(id, habit); // Update specific item view
         updateGlobalStats(); // Update global stats if used
     };
+
 
     /**
      * Updates a single habit item in the DOM including stats.
@@ -479,18 +478,24 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarGridContainer.innerHTML = '';
         calendarGridContainer.setAttribute('aria-label', `Kalender untuk ${monthNames[month]} ${year}`);
         const firstDayOfMonthDate = new Date(year, month, 1);
-        const firstDayOfMonth = firstDayOfMonthDate.getDay();
+        const firstDayOfMonth = firstDayOfMonthDate.getDay(); // Sunday = 0, Monday = 1, etc.
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
         const currentDay = today.getDate();
         const currentActualMonth = today.getMonth();
         const currentActualYear = today.getFullYear();
+
+        // Adjust firstDayOfMonth: 0 (Sun) becomes 6, 1 (Mon) stays 0, etc. for SEN start
         const paddingDays = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1;
+
+        // Add padding days (empty cells before the 1st)
         for (let i = 0; i < paddingDays; i++) {
             const emptySpan = document.createElement('span');
             emptySpan.setAttribute('role', 'gridcell'); emptySpan.setAttribute('aria-hidden', 'true');
             calendarGridContainer.appendChild(emptySpan);
         }
+
+        // Add days of the month
         for (let day = 1; day <= daysInMonth; day++) {
             const daySpan = document.createElement('span');
             daySpan.textContent = day; daySpan.setAttribute('role', 'gridcell');
@@ -521,33 +526,47 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
     });
 
+
+    // --- MODIFIKASI EVENT LISTENER KLIK HABIT ---
     // Habit list actions (delegation)
      if(habitListContainer) {
         habitListContainer.addEventListener('click', (event) => {
             const target = event.target;
-            const habitItem = target.closest('.habit-item'); // Find parent item
-            if (!habitItem) return; // Exit if click wasn't on an item descendant
-            const habitId = habitItem.dataset.id; // Get ID from item
+            // Find the closest parent habit item
+            const habitItem = target.closest('.habit-item');
+            if (!habitItem) return; // Exit if click wasn't on an item or its descendant
 
-            if (target.closest('.edit-btn')) { // Check if edit button or its child was clicked
+            const habitId = habitItem.dataset.id; // Get ID from the habit item
+
+            // Check if the click was specifically on the edit button
+            if (target.closest('.edit-btn')) {
                  const habitToEdit = habits.find(h => h.id == habitId);
                  if (habitToEdit) openModal('edit', habitToEdit);
-            } else if (target.closest('.delete-btn')) { // Check delete button
+            // Check if the click was specifically on the delete button
+            } else if (target.closest('.delete-btn')) {
                  deleteHabit(habitId);
-            } else if (target.closest('.checkbox')) { // Check checkbox area
+            // Otherwise, treat the click as a toggle action for the habit
+            } else {
                  toggleHabitCheck(habitId);
             }
         });
-        // Keyboard accessibility for checkbox
+
+        // Keyboard accessibility for checkbox (TETAP SAMA, FOKUS PADA CHECKBOX)
         habitListContainer.addEventListener('keydown', (event) => {
             const target = event.target;
+            // Only trigger if Enter or Space is pressed *while focusing the checkbox*
             if ((event.key === 'Enter' || event.key === ' ') && target.classList.contains('checkbox')) {
-                event.preventDefault(); // Prevent default action (scroll/submit)
+                event.preventDefault(); // Prevent default spacebar scroll or enter submit
                 const habitItem = target.closest('.habit-item');
-                if (habitItem) { const habitId = habitItem.dataset.id; toggleHabitCheck(habitId); }
+                if (habitItem) {
+                    const habitId = habitItem.dataset.id;
+                    toggleHabitCheck(habitId);
+                }
             }
          });
      }
+    // --- AKHIR MODIFIKASI EVENT LISTENER KLIK HABIT ---
+
 
     // Calendar Navigation Listeners
      prevMonthBtn?.addEventListener('click', () => {
