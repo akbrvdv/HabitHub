@@ -25,54 +25,54 @@ body {
   color: white;
   display: flex;
   align-items: center;
-  padding: 48px;
+  padding: 38.4px;
 }
 
 .content {
-  max-width: 660px;
-  margin-left: 50px;
+  max-width: 528px;
+  margin-left: 40px;
 }
 
 .content h1 {
   color: hsl(0, 0%, 100%);
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   line-height: 1;
 }
 
 .content h2 {
-  font-size: 25px;
-  margin-bottom: 15px;
+  font-size: 20px;
+  margin-bottom: 12px;
 }
 
 .h1span {
   color: #ffb300;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bold;
-  margin-bottom: 36px;
+  margin-bottom: 28.8px;
   line-height: 1;
 }
 
 .content p {
-  font-size: 17px;
+  font-size: 13.6px;
   line-height: 1.5;
-  margin-bottom: 36px;
+  margin-bottom: 28.8px;
 }
 
 .buttons {
   display: flex;
-  gap: 18px;
+  gap: 14.4px;
 }
 
 .btn-apaituhabithub {
-  padding: 14.4px 24px;
-  border-radius: 30px;
+  padding: 11.52px 19.2px;
+  border-radius: 24px;
   background: transparent;
   color: white;
-  border: 1.2px solid white;
+  border: 0.96px solid white;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 13.6px;
   transition: all 0.3s ease;
 }
 
@@ -84,36 +84,36 @@ body {
 .right-section {
   flex: 1;
   background: rgba(255, 255, 255, 0.652);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3.2px 24px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(100px);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 48px;
+  padding: 38.4px;
 }
 
 .form-container {
   width: 100%;
-  max-width: 480px;
+  max-width: 384px;
 }
 
 .form-container h1 {
   color: #333;
-  font-size: 38.4px;
-  margin-bottom: 35px;
+  font-size: 30.72px;
+  margin-bottom: 28px;
   line-height: 1.2;
 }
 
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 label {
   display: block;
-  font-size: 17px;
+  font-size: 13.6px;
   color: #404040;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .input-icon {
@@ -122,10 +122,10 @@ label {
 
 input {
   width: 100%;
-  padding: 14px 18px;
-  border: 1.5px solid #dddddd;
-  border-radius: 15px;
-  font-size: 17px;
+  padding: 11.2px 14.4px;
+  border: 1.2px solid #dddddd;
+  border-radius: 12px;
+  font-size: 13.6px;
   background-color: rgba(255, 255, 255, 0.576);
 }
 
@@ -141,7 +141,7 @@ input[type="confirmPassword"]:focus {
 .email-icon,
 .eye-icon {
   position: absolute;
-  right: 18px;
+  right: 14.4px;
   top: 50%;
   transform: translateY(-50%);
   color: #262626;
@@ -150,7 +150,7 @@ input[type="confirmPassword"]:focus {
 
 .name-fields {
   display: flex;
-  gap: 24px;
+  gap: 19.2px;
 }
 
 .name-fields .form-group {
@@ -160,30 +160,29 @@ input[type="confirmPassword"]:focus {
 .login-link {
   font-size: large;
   text-align: center;
-  margin: 15px;
+  margin: 12px;
 }
 
 .login-link a {
   color: hsl(0, 0%, 0%);
   text-decoration: none;
-  box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 3.2px 24px rgba(255, 255, 255, 0.1);
 }
 
 .login-link a:hover {
   transition: all 0.3s ease;
-
   color: hsl(31, 100%, 50%);
 }
 
 .btn-create-account {
-  margin-top: 15px;
+  margin-top: 12px;
   width: 100%;
-  padding: 18px;
+  padding: 14.4px;
   background-color: #ffa500;
   color: rgb(0, 0, 0);
   border: none;
-  border-radius: 30px;
-  font-size: 19px;
+  border-radius: 24px;
+  font-size: 15.2px;
   cursor: pointer;
   transition: all 0.5s ease;
 }
@@ -197,21 +196,21 @@ input[type="confirmPassword"]:focus {
 .captcha-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 #captcha-text {
-  font-size: 26px;
+  font-size: 20.8px;
   font-weight: bold;
-  margin-right: 10px;
-  user-select: none; /* Prevent text selection */
+  margin-right: 8px;
+  user-select: none;
 }
 
 #refresh-captcha {
-  border-radius: 20px;
+  border-radius: 16px;
   background-color: #ffffff;
   border: none;
-  padding: 5px 15px;
+  padding: 4px 12px;
   cursor: pointer;
 }
 
@@ -236,6 +235,6 @@ input[type="confirmPassword"]:focus {
 
   .name-fields {
     flex-direction: column;
-    gap: 12px;
+    gap: 9.6px;
   }
 }
