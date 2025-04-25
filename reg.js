@@ -1,8 +1,7 @@
 const texts = [
-  " Tumbuh lebih baik, ",
+  " Tumbuh lebih baik. ",
   " capai tujuanmu. ",
-  " Jadi lebih baik, ",
-  " Dibanding dahulu. ",
+  " Jadi lebih baik. ",
 ];
 
 let textIndex = 0;
