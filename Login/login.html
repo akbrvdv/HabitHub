@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="icon" href="assets/HabitHub icon.png" type="png" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles_login.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -29,28 +29,37 @@
             HabitHub membantu Anda untuk membuat dan mengelola Kebiasaan baik,
             memungkinkan mencapai goals jangka panjang.
           </p>
+          <!--                 <div class="buttons"> -->
+          <!--                 <button class="btn-apaituhabithub" onclick="location.href='index.html'">Apa itu HabitHub?</button> -->
+          <!--                 </div> -->
         </div>
       </div>
       <div class="right-section">
         <div class="form-container">
-          <h1>Login</h1>
+          <h1>Login.</h1>
 
           <form>
             <div class="form-group">
               <label for="username">Username</label>
               <div class="input-icon">
-                <input type="text" id="username" value="" placeholder="Masukkan Username"
+                <input type="text" id="username" value="" />
               </div>
             </div>
 
             <div class="form-group">
               <label for="password">Password</label>
               <div class="input-icon">
-                <input type="password" id="password" placeholder="Masukkan Password"/>
+                <input type="password" id="password" />
                 <i class="material-icons eye-icon">visibility_off</i>
               </div>
             </div>
 
+            <div class="login-link">
+              <p>
+                <a href="lupapw_email.html"><b>Lupa password?</b></a>
+              </p>
+            </div>
+            <!-- captcha  -->
             <div class="form-group">
               <label for="captcha">Captcha</label>
               <div class="captcha-container">
@@ -68,14 +77,14 @@
                 style="display: none"
               ></p>
             </div>
-
             <button type="submit" class="btn-login-account">
               <b>Login</b>
             </button>
 
             <div class="login-link">
               <p>
-                Belum punya akun? <a href="login.html"><b>Daftar</b></a>
+                Belum punya akun?
+                <a href="register.html"><b>Daftar</b></a>
               </p>
             </div>
           </form>
