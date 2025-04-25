@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/HabitHub icon.png" type="png/jpg" />
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="styles_lupapw.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Reset Password</h1>
+      <p class="subtitle">
+        Masukkan 4 digit code yang telah dikirimkan ke email kamu
+      </p>
+
+      <form>
+        <div class="otp-container">
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            required
+            inputmode="numeric"
+            pattern="[0-9]"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            required
+            inputmode="numeric"
+            pattern="[0-9]"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            required
+            inputmode="numeric"
+            pattern="[0-9]"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            required
+            inputmode="numeric"
+            pattern="[0-9]"
+          />
+        </div>
+
+        <button type="submit">Reset Password</button>
+        <a href="register.html" class="return-link">Kembali ke Register</a>
+      </form>
+    </div>
+    <script>
+      const inputs = document.querySelectorAll(".otp-input");
+      inputs.forEach((input, index) => {
+        input.addEventListener("keyup", (e) => {
+          const currentInput = input;
+          const nextInput = input.nextElementSibling;
+          const prevInput = input.previousElementSibling;
+
+          if (currentInput.value.length > 1) {
+            currentInput.value = "";
+            return;
+          }
+          if (
+            nextInput &&
+            nextInput.hasAttribute("disabled") &&
+            currentInput.value !== ""
+          ) {
+            nextInput.removeAttribute("disabled");
+            nextInput.focus();
+          }
+
+          if (e.key === "Backspace") {
+            if (prevInput) {
+              prevInput.focus();
+            }
+          }
+
+          const allFilled = [...inputs].every(
+            (input) => input.value.length === 1
+          );
+          const submitButton = document.querySelector('button[type="submit"]');
+          if (allFilled) {
+            submitButton.removeAttribute("disabled");
+          } else {
+            submitButton.setAttribute("disabled", true);
+          }
+        });
+      });
+
+      window.addEventListener("load", () => inputs[0].focus());
+    </script>
+  </body>
+</html>
