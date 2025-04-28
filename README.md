@@ -31,7 +31,6 @@ For detailed documentation, refer to the files linked below (written in Indonesi
 |-------------------|------------------------------------------------|
 | **Muhammad Akbar Fadilah**  | [🌐 Profile](https://github.com/akbrvdv) |
 | **Achmad Alvin Al Falah**      | [🌐 Profile](https://github.com/AchmadAlvin)    |
-| **Zahrah**      | [🌐 Profile](https://github.com/zahrah888)    |
 ---
 
 ## 📝 Deskripsi
