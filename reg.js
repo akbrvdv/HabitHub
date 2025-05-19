@@ -13,6 +13,7 @@ const delay = 1500;
 const typewriterElement = document.getElementById("typewriter");
 
 function typeEffect() {
+  if (!typewriterElement) return;
   let currentText = texts[textIndex];
   if (isDeleting) {
     typewriterElement.textContent = currentText.substring(0, charIndex--);
@@ -33,103 +34,123 @@ function typeEffect() {
   setTimeout(typeEffect, typeSpeed);
 }
 
-typeEffect();
+if (typewriterElement) {
+  typeEffect();
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   const passwordFields = document.querySelectorAll(
-    ".input-icon input[type='password'], .input-icon input[type='confirmPassword']"
+    ".form-container .input-icon input[type='password']"
   );
-  const eyeIcons = document.querySelectorAll(".eye-icon");
+  const eyeIcons = document.querySelectorAll(".form-container .eye-icon");
 
   eyeIcons.forEach((eyeIcon, index) => {
-    eyeIcon.addEventListener("click", function () {
+    if (passwordFields[index]) {
       const inputField = passwordFields[index];
-      if (inputField.type === "password") {
-        inputField.type = "text";
-        eyeIcon.textContent = "visibility";
-      } else {
-        inputField.type = "password";
-        eyeIcon.textContent = "visibility_off";
-      }
-    });
+      eyeIcon.addEventListener("click", function () {
+        if (inputField.type === "password") {
+          inputField.type = "text";
+          eyeIcon.textContent = "visibility";
+        } else {
+          inputField.type = "password";
+          eyeIcon.textContent = "visibility_off";
+        }
+      });
+    } else {
+    }
   });
 
   const password = document.getElementById("password");
   const confirmPassword = document.getElementById("confirmPassword");
   const form = document.querySelector("form");
 
-  confirmPassword.addEventListener("input", function () {
-    if (password.value !== confirmPassword.value) {
-      confirmPassword.style.border = "2px solid red";
-    } else {
-      confirmPassword.style.border = "2px solid green";
-    }
-  });
+  if (password && confirmPassword) {
+    confirmPassword.addEventListener("input", function () {
+      if (password.value !== confirmPassword.value) {
+        confirmPassword.style.border = "2px solid red";
+      } else {
+        confirmPassword.style.border = "2px solid green";
+      }
+    });
+  }
 
-  form.addEventListener("submit", function (event) {
-    if (password.value !== confirmPassword.value) {
-      event.preventDefault();
-      alert("Password dan Confirm Password tidak cocok!");
-    }
-  });
-
-  const captchaText = document.getElementById("captcha-text");
-  const captchaInput = document.getElementById("captcha-input");
+  const captchaTextElement = document.getElementById("captcha-text");
+  const captchaInputElement = document.getElementById("captcha-input");
   const refreshCaptchaButton = document.getElementById("refresh-captcha");
-  const captchaError = document.getElementById("captcha-error");
+  const captchaErrorJsElement = document.getElementById("captcha-error-js");
 
-  let generatedCaptcha = "";
+  let currentDisplayedCaptcha = captchaTextElement
+    ? captchaTextElement.textContent
+    : "";
 
-  function generateCaptcha() {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let captcha = "";
-    for (let i = 0; i < 6; i++) {
-      captcha += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
+  async function refreshCaptchaFromServerReg() {
+    if (!captchaTextElement || !captchaErrorJsElement) return;
+    try {
+      const response = await fetch("register.php?action=refresh_captcha_reg");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data.captcha_text) {
+        currentDisplayedCaptcha = data.captcha_text;
+        captchaTextElement.textContent = currentDisplayedCaptcha;
+        captchaErrorJsElement.textContent = "";
+        captchaErrorJsElement.style.display = "none";
+        if (captchaInputElement) captchaInputElement.style.border = "";
+      }
+    } catch (error) {
+      console.error("Error refreshing captcha:", error);
+      captchaErrorJsElement.textContent = "Gagal memuat captcha baru.";
+      captchaErrorJsElement.style.display = "block";
     }
-    generatedCaptcha = captcha;
-    captchaText.textContent = captcha;
-
-    captchaError.textContent = "";
-    captchaError.style.display = "none";
-    captchaInput.style.border = "";
   }
 
-  function validateCaptcha() {
-    console.log("validateCaptcha() dipanggil");
-    if (captchaInput.value !== generatedCaptcha) {
-      console.log("Captcha tidak valid!");
-      captchaError.textContent = "Captcha tidak valid";
-      captchaError.style.display = "block";
-      captchaInput.style.border = "2px solid red";
+  if (refreshCaptchaButton) {
+    refreshCaptchaButton.addEventListener("click", refreshCaptchaFromServerReg);
+  }
+
+  function validateCaptchaClientSideReg() {
+    if (!captchaInputElement || !captchaErrorJsElement || !captchaTextElement)
+      return true; // Lewati jika elemen tidak ada
+
+    const displayedCaptchaText = captchaTextElement.textContent;
+
+    if (
+      captchaInputElement.value.trim().toLowerCase() !==
+      displayedCaptchaText.toLowerCase()
+    ) {
+      captchaErrorJsElement.textContent = "Captcha tidak sesuai (client-side).";
+      captchaErrorJsElement.style.display = "block";
+      captchaInputElement.style.border = "2px solid red";
       return false;
-    } else {
-      console.log("Captcha valid!");
-      captchaError.textContent = "";
-      captchaError.style.display = "none";
-      captchaInput.style.border = "";
-      return true;
     }
+    captchaErrorJsElement.textContent = "";
+    captchaErrorJsElement.style.display = "none";
+    captchaInputElement.style.border = "";
+    return true;
   }
 
-  refreshCaptchaButton.addEventListener("click", generateCaptcha);
+  if (form) {
+    form.addEventListener("submit", function (event) {
+      let formIsValid = true;
 
-  form.addEventListener("submit", function (event) {
-    console.log("Form disubmit!"); //Verifikasi submit
+      if (
+        password &&
+        confirmPassword &&
+        password.value !== confirmPassword.value
+      ) {
+        alert("Password dan Konfirmasi Password tidak cocok!");
+        confirmPassword.style.border = "2px solid red"; // Beri tanda error
+        event.preventDefault();
+        formIsValid = false;
+        return; // Hentikan proses lebih lanjut jika password tidak cocok
+      }
 
-    const isCaptchaValid = validateCaptcha();
-    console.log("isCaptchaValid:", isCaptchaValid); //Verifikasi hasil captcha
-
-    if (!isCaptchaValid) {
-      console.log("Captcha tidak valid, mencegah submit.");
-      event.preventDefault(); // Mencegah submit jika ada error
-      alert("Perbaiki kesalahan pada form!"); // Atur alert yang lebih baik
-    } else {
-      console.log("Captcha valid, form akan disubmit.");
-    }
-  });
-
-  generateCaptcha(); // Generate captcha saat halaman dimuat
+      if (!validateCaptchaClientSideReg()) {
+        event.preventDefault();
+        formIsValid = false;
+        return; // Hentikan jika captcha client-side gagal
+      }
+    });
+  }
 });
