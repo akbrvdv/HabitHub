@@ -13,6 +13,7 @@ const delay = 1500;
 const typewriterElement = document.getElementById("typewriter");
 
 function typeEffect() {
+  if (!typewriterElement) return; // Guard if element not found
   let currentText = texts[textIndex];
   if (isDeleting) {
     typewriterElement.textContent = currentText.substring(0, charIndex--);
@@ -55,53 +56,78 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Captcha
-  const captchaText = document.getElementById("captcha-text");
-  const captchaInput = document.getElementById("captcha-input");
+  const captchaTextElement = document.getElementById("captcha-text");
+  const captchaInputElement = document.getElementById("captcha-input");
   const refreshCaptchaButton = document.getElementById("refresh-captcha");
-  const captchaError = document.getElementById("captcha-error");
+  const captchaErrorJsElement = document.getElementById("captcha-error-js"); // Changed ID for JS error
 
-  let generatedCaptcha = "";
+  // This variable will hold the captcha text displayed to the user, fetched from server
+  let currentDisplayedCaptcha = captchaTextElement
+    ? captchaTextElement.textContent
+    : "";
 
-  function generateCaptcha() {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let captcha = "";
-    for (let i = 0; i < 6; i++) {
-      captcha += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
+  async function refreshCaptchaFromServer() {
+    if (!captchaTextElement) return;
+    try {
+      const response = await fetch("login.php?action=refresh_captcha");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data.captcha_text) {
+        currentDisplayedCaptcha = data.captcha_text;
+        captchaTextElement.textContent = currentDisplayedCaptcha;
+        if (captchaErrorJsElement) {
+          captchaErrorJsElement.textContent = "";
+          captchaErrorJsElement.style.display = "none";
+        }
+        if (captchaInputElement) captchaInputElement.style.border = "";
+      }
+    } catch (error) {
+      console.error("Error refreshing captcha:", error);
+      if (captchaErrorJsElement) {
+        captchaErrorJsElement.textContent = "Gagal memuat captcha baru.";
+        captchaErrorJsElement.style.display = "block";
+      }
     }
-    generatedCaptcha = captcha;
-    captchaText.textContent = captcha;
-
-    captchaError.textContent = "";
-    captchaError.style.display = "none";
-    captchaInput.style.border = "";
   }
 
-  function validateCaptcha() {
-    if (captchaInput.value !== generatedCaptcha) {
-      captchaError.textContent = "Captcha tidak valid";
-      captchaError.style.display = "block";
-      captchaInput.style.border = "2px solid red";
+  function validateCaptchaClientSide() {
+    if (!captchaInputElement || !captchaErrorJsElement) return true; // Skip if elements missing
+
+    if (
+      captchaInputElement.value.trim().toLowerCase() !==
+      currentDisplayedCaptcha.toLowerCase()
+    ) {
+      captchaErrorJsElement.textContent =
+        "Captcha tidak sesuai (client-side check).";
+      captchaErrorJsElement.style.display = "block";
+      captchaInputElement.style.border = "2px solid red";
       return false;
     } else {
-      captchaError.textContent = "";
-      captchaError.style.display = "none";
-      captchaInput.style.border = "";
+      captchaErrorJsElement.textContent = "";
+      captchaErrorJsElement.style.display = "none";
+      captchaInputElement.style.border = "";
       return true;
     }
   }
 
-  refreshCaptchaButton.addEventListener("click", generateCaptcha);
+  if (refreshCaptchaButton) {
+    refreshCaptchaButton.addEventListener("click", refreshCaptchaFromServer);
+  }
 
   const form = document.querySelector("form");
-  form.addEventListener("submit", function (event) {
-    if (!validateCaptcha()) {
-      event.preventDefault();
-      alert("Perbaiki kesalahan pada form!");
-    }
-  });
-
-  generateCaptcha();
+  if (form) {
+    form.addEventListener("submit", function (event) {
+      // Client-side captcha validation is now more of a UX hint.
+      // The server will perform the authoritative validation.
+      // You can keep it or remove it. If kept, it provides immediate feedback.
+      if (!validateCaptchaClientSide()) {
+        event.preventDefault(); // Prevent form submission if client-side check fails
+        // alert("Perbaiki kesalahan pada form (Captcha)!"); // Optional alert
+      }
+      // The form will submit via standard POST if client-side validation passes (or is removed)
+    });
+  }
+  // Initial captcha is set by PHP. No need for JS to generate it on load.
 });
