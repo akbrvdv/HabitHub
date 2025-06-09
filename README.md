@@ -5,12 +5,8 @@
 ---
 
 ## 📂 Daftar Isi Folder
-- **📄 Dokumen UAS**
-  - 📘 Dokumentasi Awal Proyek Pengembangan HabitHub.pdf  
-  - 📙 Fitur Database[1].pdf  
-  - 📗 Laporan Tugas UAS Kelompok 8.pdf  
-  - 📕 Manual Penggunaan Sistem Manajemen.pdf  
-- **📁 Folder Basic**
+  - 📘 assets
+  - 📙 libs
 
 ---
 
