@@ -17,16 +17,6 @@
 ![Environment](https://img.shields.io/badge/environment-XAMPP-orange)
 
 ---
-
-## 📄 Dokumentasi
-Semua dokumentasi tersedia di dalam folder **Dokumen UAS**:
-
-- 📘 Dokumentasi Awal Proyek
-- 📙 Fitur Basis Data
-- 📗 Laporan Tugas UAS
-- 📕 Manual Penggunaan Sistem
-
----
 ## 👥 Kontributor
 
 | Nama                      | GitHub Profile                                  |
