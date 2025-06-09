@@ -5,15 +5,12 @@
 ---
 
 🚀 Fitur Utama
-Tambah, edit, dan hapus kebiasaan
-
-Penjadwalan harian dan pelacakan progres
-
-Tampilan visual untuk kemajuan kebiasaan
-
-Sistem pengingat dan notifikasi dasar (opsional)
-
-Antarmuka sederhana dan mudah digunakan
+  - Tambah, edit, dan hapus kebiasaan
+  - Pelacakan progres kebiasaan
+  - Habit Buddy
+  - Riwayat
+  - AI Coach
+  - Catatan
 
 ## 📂 Daftar Isi Folder
   - 📘 assets
