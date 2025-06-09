@@ -11,7 +11,6 @@
   - 📗 Laporan Tugas UAS Kelompok 8.pdf  
   - 📕 Manual Penggunaan Sistem Manajemen.pdf  
 - **📁 Folder Basic**
-  - 🔧 Codingan composer
 
 ---
 
@@ -20,7 +19,6 @@
 ![Framework](https://img.shields.io/badge/framework-Yii2-blue)
 ![Language](https://img.shields.io/badge/language-PHP-blue)
 ![Environment](https://img.shields.io/badge/environment-XAMPP-orange)
-![Dependencies](https://img.shields.io/badge/dependencies-Composer-yellow)
 
 ---
 
