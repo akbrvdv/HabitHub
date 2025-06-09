@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Coach - Habithub</title>
+    <link rel="icon" href="assets/HabitHub icon.png" type="image/png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="aicoach_style.css" />
+  </head>
+  <body>
+    <div class="background-overlay"></div>
+    <div class="chat-container">
+      <div class="chat-header">
+        <img src="assets/aicoach.png" alt="HabitHub Logo" class="header-logo" />
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-area">
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Ketik pesan Anda..."
+          autocomplete="off"
+        />
+        <button id="sendButton">
+          <span class="material-icons-outlined">send</span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const chatMessages = document.getElementById("chatMessages");
+      const userInput = document.getElementById("userInput");
+      const sendButton = document.getElementById("sendButton");
+      const backgroundOverlay = document.querySelector(".background-overlay");
+
+      let conversationHistory = [];
+      let pendingConfirmations = [];
+      let username = "Anda";
+
+      async function fetchUsername() {
+        try {
+          const response = await fetch(
+            "aicoach_handler.php?action=get_username"
+          );
+          const data = await response.json();
+          if (data.success && data.username) {
+            username = data.username;
+          }
+        } catch (e) {
+          console.warn("Could not fetch username, defaulting to 'Anda'.");
+        }
+      }
+
+      function addMessageToChat(text, sender, senderName, isHTML = false) {
+        const messageWrapper = document.createElement("div");
+        messageWrapper.classList.add("message-wrapper", `sender-${sender}`);
+
+        const senderNameDiv = document.createElement("div");
+        senderNameDiv.classList.add("sender-name");
+        senderNameDiv.textContent = senderName;
+
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", sender);
+
+        if (isHTML) {
+          messageDiv.innerHTML = text;
+        } else {
+          messageDiv.textContent = text;
+        }
+
+        messageWrapper.appendChild(senderNameDiv);
+        messageWrapper.appendChild(messageDiv);
+        chatMessages.appendChild(messageWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return messageDiv;
+      }
+
+      function showTypingIndicator() {
+        const messageWrapper = document.createElement("div");
+        messageWrapper.classList.add(
+          "message-wrapper",
+          "sender-ai",
+          "typing-indicator-container"
+        );
+
+        const senderNameDiv = document.createElement("div");
+        senderNameDiv.classList.add("sender-name");
+        senderNameDiv.textContent = "AI Coach";
+        messageWrapper.appendChild(senderNameDiv);
+
+        const typingDiv = document.createElement("div");
+        typingDiv.classList.add("message", "ai");
+        typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+        messageWrapper.appendChild(typingDiv);
+
+        chatMessages.appendChild(messageWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return messageWrapper;
+      }
+
+      function removeTypingIndicator(indicatorElement) {
+        if (indicatorElement) {
+          chatMessages.removeChild(indicatorElement);
+        }
+      }
+
+      function displayConfirmationCard(aiMessageText, suggestionsArray) {
+        let baseMessage = aiMessageText.replace(/\n/g, "<br>");
+        let confirmationCardsHTML = "";
+        pendingConfirmations = [];
+
+        suggestionsArray.forEach((suggestion, index) => {
+          let detailsHTML = "";
+          let operationType = "";
+          let durationHTML = "";
+
+          if (
+            suggestion.duration_unlimited === false &&
+            suggestion.duration_value &&
+            suggestion.duration_unit
+          ) {
+            durationHTML = `<p><strong>Durasi:</strong> ${suggestion.duration_value} ${suggestion.duration_unit}</p>`;
+          } else {
+            durationHTML = `<p><strong>Durasi:</strong> Tak Terbatas</p>`;
+          }
+
+          if (suggestion.intent === "create_suggestion") {
+            operationType = "Buat Habit Baru";
+            detailsHTML = `
+                        <p><strong>Nama Habit:</strong> ${
+                          suggestion.name || "Tidak ada"
+                        }</p>
+                        <p><strong>Ikon:</strong> ${
+                          suggestion.icon || "Tidak ada"
+                        }</p>
+                        <p><strong>Kategori:</strong> ${
+                          suggestion.category || "Semua"
+                        }</p>
+                        ${durationHTML}
+                    `;
+          } else if (suggestion.intent === "update_suggestion") {
+            operationType = "Perbarui Habit";
+            detailsHTML = `
+                        <p><strong>Habit Lama:</strong> ${
+                          suggestion.old_name || "Tidak diketahui"
+                        }</p>
+                        <p><strong>Nama Baru:</strong> ${
+                          suggestion.new_name || "-"
+                        }</p>
+                        <p><strong>Ikon Baru:</strong> ${
+                          suggestion.new_icon || "-"
+                        }</p>
+                        <p><strong>Kategori Baru:</strong> ${
+                          suggestion.new_category || "-"
+                        }</p>
+                        ${durationHTML}
+                    `;
+          } else if (suggestion.intent === "delete_suggestion") {
+            operationType = "Hapus Habit";
+            detailsHTML = `<p><strong>Nama Habit:</strong> ${
+              suggestion.name || "Tidak diketahui"
+            }</p>`;
+          }
+
+          confirmationCardsHTML += `
+                    <div class="confirmation-card" data-suggestion-index="${index}">
+                        <p class="operation-type">${operationType}</p>
+                        <div class="habit-details">${detailsHTML}</div>
+                        <div class="actions">
+                            <button class="cancel" data-action="cancel" data-index="${index}">Batal</button>
+                            <button class="confirm" data-action="confirm" data-index="${index}">Ya, Lanjutkan</button>
+                        </div>
+                    </div>
+                `;
+          pendingConfirmations.push({ suggestion, confirmed: null });
+        });
+
+        const fullHTML = `${baseMessage}<div class="multi-confirmation-container">${confirmationCardsHTML}</div>`;
+        const messageDiv = addMessageToChat(fullHTML, "ai", "AI Coach", true);
+
+        messageDiv.querySelectorAll("button.confirm").forEach((btn) => {
+          btn.addEventListener("click", () =>
+            handleSingleConfirmation(
+              parseInt(btn.dataset.index),
+              true,
+              messageDiv
+            )
+          );
+        });
+        messageDiv.querySelectorAll("button.cancel").forEach((btn) => {
+          btn.addEventListener("click", () =>
+            handleSingleConfirmation(
+              parseInt(btn.dataset.index),
+              false,
+              messageDiv
+            )
+          );
+        });
+      }
+
+      async function handleSingleConfirmation(
+        index,
+        isConfirmed,
+        originalMessageDiv
+      ) {
+        if (
+          index >= pendingConfirmations.length ||
+          pendingConfirmations[index].confirmed !== null
+        )
+          return;
+
+        const { suggestion } = pendingConfirmations[index];
+        pendingConfirmations[index].confirmed = isConfirmed;
+
+        const cardElement = originalMessageDiv.querySelector(
+          `.confirmation-card[data-suggestion-index="${index}"]`
+        );
+        if (cardElement) {
+          cardElement
+            .querySelectorAll(".actions button")
+            .forEach((btn) => (btn.disabled = true));
+          cardElement.style.opacity = "0.7";
+          cardElement.insertAdjacentHTML(
+            "beforeend",
+            `<p class="status-label">${
+              isConfirmed ? "Akan diproses..." : "Dibatalkan."
+            }</p>`
+          );
+        }
+
+        let userResponseText = isConfirmed
+          ? `Ya, saya setuju untuk ${suggestion.intent.replace(
+              "_suggestion",
+              ""
+            )} habit '${suggestion.name || suggestion.old_name}'.`
+          : `Tidak, batalkan untuk ${suggestion.intent.replace(
+              "_suggestion",
+              ""
+            )} habit '${suggestion.name || suggestion.old_name}'.`;
+        addMessageToChat(userResponseText, "user", username);
+        conversationHistory.push({
+          role: "user",
+          parts: [{ text: userResponseText }],
+        });
+
+        if (isConfirmed) {
+          let actionType = "";
+          let payload = { ...suggestion };
+
+          if (suggestion.intent === "create_suggestion")
+            actionType = "confirm_create_habit";
+          else if (suggestion.intent === "update_suggestion")
+            actionType = "confirm_update_habit";
+          else if (suggestion.intent === "delete_suggestion")
+            actionType = "confirm_delete_habit";
+
+          payload.action = actionType;
+
+          const typingIndicator = showTypingIndicator();
+          document.body.classList.add("ai-thinking");
+          backgroundOverlay.classList.add("active");
+
+          try {
+            const response = await fetch("aicoach_handler.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const data = await response.json();
+
+            if (data.success) {
+              addMessageToChat(
+                data.message || "Operasi berhasil.",
+                "ai",
+                "AI Coach"
+              );
+              conversationHistory.push({
+                role: "model",
+                parts: [{ text: data.message || "Operasi berhasil." }],
+              });
+            } else {
+              addMessageToChat(
+                data.message || "Maaf, terjadi kesalahan.",
+                "ai",
+                "AI Coach"
+              );
+              conversationHistory.push({
+                role: "model",
+                parts: [{ text: data.message || "Maaf, terjadi kesalahan." }],
+              });
+            }
+          } catch (error) {
+            addMessageToChat(
+              "Maaf, ada masalah koneksi saat mengkonfirmasi.",
+              "ai",
+              "AI Coach"
+            );
+          } finally {
+            removeTypingIndicator(typingIndicator);
+            document.body.classList.remove("ai-thinking");
+            backgroundOverlay.classList.remove("active");
+          }
+        } else {
+          addMessageToChat(
+            `Baik, ${suggestion.intent.replace("_suggestion", "")} habit '${
+              suggestion.name || suggestion.old_name
+            }' dibatalkan.`,
+            "ai",
+            "AI Coach"
+          );
+          conversationHistory.push({
+            role: "model",
+            parts: [
+              {
+                text: `Baik, ${suggestion.intent.replace(
+                  "_suggestion",
+                  ""
+                )} habit '${
+                  suggestion.name || suggestion.old_name
+                }' dibatalkan.`,
+              },
+            ],
+          });
+        }
+      }
+
+      async function sendMessage() {
+        const messageText = userInput.value.trim();
+        if (!messageText) return;
+
+        addMessageToChat(messageText, "user", username);
+        userInput.value = "";
+
+        conversationHistory.push({
+          role: "user",
+          parts: [{ text: messageText }],
+        });
+
+        const typingIndicator = showTypingIndicator();
+        document.body.classList.add("ai-thinking");
+        backgroundOverlay.classList.add("active");
+
+        try {
+          const response = await fetch("aicoach_handler.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "chat_with_ai",
+              history: conversationHistory,
+            }),
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            conversationHistory.push({
+              role: "model",
+              parts: [{ text: data.ai_message }],
+            });
+            if (
+              data.suggestions_array &&
+              Array.isArray(data.suggestions_array) &&
+              data.suggestions_array.length > 0
+            ) {
+              displayConfirmationCard(data.ai_message, data.suggestions_array);
+            } else if (data.read_result) {
+              let habitListHTML =
+                data.ai_message.replace(/\n/g, "<br>") +
+                '<ul class="habit-read-list">';
+              data.read_result.forEach((habit) => {
+                let durationText = habit.is_duration_unlimited
+                  ? "Tak Terbatas"
+                  : `Berakhir ${new Date(
+                      habit.calculated_end_date
+                    ).toLocaleDateString("id-ID")}`;
+                habitListHTML += `<li><span class="icon">${habit.icon}</span> ${
+                  habit.name
+                } <span class="category">(${
+                  habit.category || "semua"
+                }) - ${durationText}</span></li>`;
+              });
+              habitListHTML += "</ul>";
+              addMessageToChat(habitListHTML, "ai", "AI Coach", true);
+            } else {
+              addMessageToChat(
+                data.ai_message.replace(/\n/g, "<br>"),
+                "ai",
+                "AI Coach",
+                true
+              );
+            }
+          } else {
+            addMessageToChat(
+              data.message || "Maaf, AI sedang tidak dapat merespons.",
+              "ai",
+              "AI Coach"
+            );
+          }
+        } catch (error) {
+          addMessageToChat(
+            "Maaf, terjadi kesalahan koneksi.",
+            "ai",
+            "AI Coach"
+          );
+        } finally {
+          removeTypingIndicator(typingIndicator);
+          document.body.classList.remove("ai-thinking");
+          backgroundOverlay.classList.remove("active");
+        }
+      }
+
+      sendButton.addEventListener("click", sendMessage);
+      userInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      });
+
+      (async () => {
+        await fetchUsername();
+        addMessageToChat(
+          "Halo! Saya AI Coach dari HabitHub. Ada yang bisa saya bantu terkait habit Anda? Anda bisa meminta saya membuat habit dengan durasi tertentu, misalnya 'buatkan habit lari pagi selama 30 hari'.",
+          "ai",
+          "AI Coach"
+        );
+        conversationHistory.push({
+          role: "model",
+          parts: [
+            {
+              text: "Halo! Saya AI Coach dari HabitHub. Ada yang bisa saya bantu terkait habit Anda? Anda bisa meminta saya membuat habit dengan durasi tertentu, misalnya 'buatkan habit lari pagi selama 30 hari'.",
+            },
+          ],
+        });
+      })();
+    </script>
+  </body>
+</html>

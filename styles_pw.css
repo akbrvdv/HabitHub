@@ -1,0 +1,228 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "DM Sans", sans-serif;
+}
+
+:root {
+  --color-orange-primary: #fca503;
+  --color-orange-dark: #e08e00;
+  --color-black-strong: #161616;
+  --color-text-button: #333333;
+  --color-text-button-hover: var(--color-orange-primary);
+  --color-background-button-hover: var(--color-black-strong);
+  --border-radius-button: 25px;
+  --border-radius-container: 35px;
+  --border-radius-input: 15px;
+  --shadow-brutalist-button: 3px 3px 0px var(--color-black-strong);
+  --shadow-brutalist-button-sm: 2px 2px 0px var(--color-black-strong);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  background-color: white;
+  border: 8px solid var(--color-orange-primary);
+  border-radius: var(--border-radius-container);
+  box-shadow: 0px 10px var(--color-orange-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-placeholder {
+  width: 150px;
+  height: 150px;
+  background-image: url("assets/noob.png");
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 35px;
+  max-width: 300px;
+  line-height: 1.4;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+.otp-input {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 16px;
+  border: 1.5px solid #cccccc;
+  border-radius: var(--border-radius-input);
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.otp-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.otp-input {
+  width: 55px;
+  height: 60px;
+  font-size: 16px;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.otp-input::-webkit-outer-spin-button,
+.otp-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.at-symbol {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #666;
+  pointer-events: none;
+}
+
+.email-input.with-icon {
+  padding-left: 40px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #262626;
+  user-select: none;
+  cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-orange-primary);
+  box-shadow: 0 0 0 3px rgba(252, 165, 3, 0.3);
+}
+
+button {
+  width: 100%;
+  max-width: 300px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: var(--color-orange-primary);
+  color: var(--color-text-button);
+  border: 2px solid var(--color-black-strong);
+  border-radius: var(--border-radius-button);
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease,
+    box-shadow 0.2s ease;
+  box-shadow: var(--shadow-brutalist-button);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--color-background-button-hover);
+  color: var(--color-text-button-hover);
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+button:focus {
+  outline: 2px solid var(--color-orange-dark);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  background-color: #fcdba3;
+  color: #a5a5a5;
+  border-color: #d3d3d3;
+  box-shadow: var(--shadow-brutalist-button-sm);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+button:disabled:hover {
+  transform: none;
+  box-shadow: var(--shadow-brutalist-button-sm);
+  background-color: #fcdba3;
+  color: #a5a5a5;
+}
+
+.return-link {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.return-link:hover {
+  color: var(--color-orange-primary);
+}
