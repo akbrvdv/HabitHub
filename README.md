@@ -33,25 +33,6 @@ Semua dokumentasi tersedia di dalam folder **Dokumen UAS**:
 - 📕 Manual Penggunaan Sistem
 
 ---
-
-## 🚀 Cara Menggunakan
-1. Clone repositori ini ke lokal:
-   ```bash
-   git clone https://github.com/akbrvdv/HabitHub
-   ```
-2. Pindahkan folder ke direktori server lokal (misalnya `htdocs` pada XAMPP).
-3. Pastikan Composer sudah terinstal dan jalankan:
-   ```bash
-   composer install
-   ```
-4. Buka website melalui browser di:
-   ```
-   http://localhost/HabitHub
-   ```
-5. Ikuti panduan lengkap pada **Manual Penggunaan Sistem** di folder dokumentasi.
-
----
-
 ## 👥 Kontributor
 
 | Nama                      | GitHub Profile                                  |
