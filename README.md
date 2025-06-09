@@ -4,6 +4,17 @@
 
 ---
 
+🚀 Fitur Utama
+Tambah, edit, dan hapus kebiasaan
+
+Penjadwalan harian dan pelacakan progres
+
+Tampilan visual untuk kemajuan kebiasaan
+
+Sistem pengingat dan notifikasi dasar (opsional)
+
+Antarmuka sederhana dan mudah digunakan
+
 ## 📂 Daftar Isi Folder
   - 📘 assets
   - 📙 libs
