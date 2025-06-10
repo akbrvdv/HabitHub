@@ -20,7 +20,6 @@
 
 ## 🧰 Tech Stack
 ![Database](https://img.shields.io/badge/database-MySQL-green)
-![Framework](https://img.shields.io/badge/framework-Yii2-blue)
 ![Language](https://img.shields.io/badge/language-PHP-blue)
 ![Environment](https://img.shields.io/badge/environment-XAMPP-orange)
 
